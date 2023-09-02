@@ -1,6 +1,6 @@
 public interface ATMAction {
     void checKable();
-    void withdraWable(int value);
+    void withdraWable(double value);
     void depositEable(int value);
     void tranfeRable(int value);
 }

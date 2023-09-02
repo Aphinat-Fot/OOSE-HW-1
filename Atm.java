@@ -14,6 +14,13 @@ public class Atm {
 
     }
 
+    public static int setRate() {
+        System.out.println("\033[H\033[2J");
+        System.out.print("Please enter BTC rate => ");
+        int rate = input.nextInt();
+        return rate;
+    }
+
     public static void applyManager() {
         System.out.println("\033[H\033[2J");
         System.out.println("Applymanager");
@@ -56,6 +63,8 @@ public class Atm {
     }
 
     public static void applyAccount() {
+        int rate = setRate();
+        // int rate = managerList.get(0).getRate();
         System.out.println("\033[H\033[2J");
         boolean status = true;
         while (status) {
@@ -85,8 +94,8 @@ public class Atm {
                                         System.out.print("Balance = ");
                                         Double balance = input.nextDouble();
                                         if (balance <= 1000000) {
-                                            Account account = new Account(id, fullname, gender, idaccount, password,
-                                                    balance);
+                                            Account account = new Account(id, fullname, gender, idaccount,
+                                                    password, balance,rate);
                                             accountList.add(account);
                                             status = false;
                                         } else
@@ -130,7 +139,6 @@ public class Atm {
 
     public static void menuList(Account user) {
         boolean status = true;
-
         // System.out.println("\033[H\033[2J");
         while (status) {
             boolean status1 = true;
@@ -149,20 +157,49 @@ public class Atm {
                     user.checKable();
                     break;
                 case 2:
-                    while (status1) {
-                        System.out.println("The amount of money in your account. = " + user.getBalance());
-                        System.out.print("The amount of money you want to withdraw. = ");
-                        int withdraw = input.nextInt();
-                        if (user.getBalance() >= withdraw) {
-                            user.withdraWable(withdraw);
-                            status1 = false;
-                        } else {
-                            System.out.println("-------------------------------------------------------");
-                            System.out.println("Please verify the balance in your account.");
-                            System.out.println("-------------------------------------------------------");
-                            status1 = false;
-                        }
+                    System.out.println("1.Withdraw by bath");
+                    System.out.println("2.Withdraw by btc");
+                    System.out.println("Enter Number : ");
+                    int choose1 = input.nextInt();
+                    switch (choose1) {
+                        case 1:
+                            while (status1) {
+                                System.out.println("The amount of money in your account. = " + user.getBalance());
+                                System.out.print("The amount of money you want to withdraw. = ");
+                                int withdraw = input.nextInt();
+                                if (user.getBalance() >= withdraw) {
+                                    user.withdraWable(withdraw);
+                                    status1 = false;
+                                } else {
+                                    System.out.println("-------------------------------------------------------");
+                                    System.out.println("Please verify the balance in your account.");
+                                    System.out.println("-------------------------------------------------------");
+                                    status1 = false;
+                                }
 
+                            }
+                            break;
+                        case 2:
+                            while (status1) {
+                                double btc = user.getBalance() / user.getRate();
+                                System.out.println("The amount of BTC in your account. = " + btc);
+                                System.out.print("The amount of BTC you want to withdraw. = ");
+                                double btc1 = input.nextInt();
+                                if (btc >= btc1) {
+                                    double btc2 = btc - btc1;
+                                    double btc3 = btc - btc2;
+                                    double withdraw = btc3 * user.getRate();
+                                    user.withdraWable(withdraw);
+                                    status1 = false;
+                                } else {
+                                    System.out.println("-------------------------------------------------------");
+                                    System.out.println("Please verify the BTC in your account.");
+                                    System.out.println("-------------------------------------------------------");
+                                    status1 = false;
+                                }
+
+                            }
+                            break;
                     }
 
                     break;
@@ -189,19 +226,22 @@ public class Atm {
                             } else {
                                 for (Account account : accountList) {
                                     if (account.getId().equals(tranfer)) {
-                                        System.out.println("Account ID ="+account.getId());
-                                        System.out.println("FullName ="+account.getFullname());
-                                        System.out.println("The amount of money in your account. = " + user.getBalance());
+                                        System.out.println("Account ID =" + account.getId());
+                                        System.out.println("FullName =" + account.getFullname());
+                                        System.out
+                                                .println("The amount of money in your account. = " + user.getBalance());
                                         System.out.print("The amount of money you wish to transfer. = ");
                                         int tranfer1 = input.nextInt();
                                         if (user.getBalance() >= tranfer1) {
                                             user.setBalance(user.getBalance() - tranfer1);
                                             account.tranfeRable(tranfer1);
                                             status1 = false;
-                                        }else {
-                                            System.out.println("-------------------------------------------------------");
+                                        } else {
+                                            System.out
+                                                    .println("-------------------------------------------------------");
                                             System.out.println("Please verify the balance in your account.");
-                                            System.out.println("-------------------------------------------------------");
+                                            System.out
+                                                    .println("-------------------------------------------------------");
                                             status1 = false;
                                         }
 

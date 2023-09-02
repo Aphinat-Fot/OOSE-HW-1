@@ -1,5 +1,6 @@
 public class Person {
     private String id,fullname,gender;
+    // private int rate;
 
     public Person(String id,String fullname,String gender){
         this.id=id;
@@ -7,7 +8,9 @@ public class Person {
         this.gender=gender;
     }
 
-    
+    // public void setRate(int rate){
+    //     this.rate=rate;
+    // }
     public void setId(String id){
         this.id=id;
     }
@@ -26,4 +29,8 @@ public class Person {
      public String getGender(){
         return gender;
     }
+    // public int getRate(){
+    //     return rate;
+    // }
 }
+

@@ -2,12 +2,23 @@ class Account extends Person implements ATMAction {
     private String idlogin;
     private String password;
     private Double balance;
+    private int rate;
 
-    public Account(String id, String fullname, String gender, String idlogin, String password, Double balance) {
+
+
+    public Account(String id, String fullname, String gender, String idlogin, String password, Double balance, int rate) {
         super(id, fullname, gender);
         this.idlogin = idlogin;
         this.password = password;
         this.balance = balance;
+        this.rate = rate;
+
+    }
+     public int getRate(){
+        return rate;
+    }
+    public void setRate(int rate){
+        this.rate=rate;
     }
 
     public void setId(String id) {
@@ -24,6 +35,8 @@ class Account extends Person implements ATMAction {
 
     }
 
+
+
     public String getId() {
         return this.idlogin;
     }
@@ -38,11 +51,12 @@ class Account extends Person implements ATMAction {
 
     public void checKable() {
         System.out.println("-------------------------------------------------------");
-        System.out.println("The amount of money in your account. = "+this.balance);
+        System.out.println("The amount of money in your account. = "+this.balance+" Bath");
+        System.out.println("The amount of BTC in your account. = "+this.balance/this.getRate()+ " BTC");
         System.out.println("-------------------------------------------------------");
     }
 
-    public void withdraWable(int value) {
+    public void withdraWable(double value) {
         this.balance -= value;
         System.out.println("-------------------------------------------------------");
         System.out.println("The withdrawal has been successful.");
